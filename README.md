@@ -1,4 +1,4 @@
-# Cloud Workshop 28th June
+# IBM Kubernetes Service - Cloud Workshop
 
 
 ## 0. Register on IBM Cloud
@@ -6,12 +6,12 @@
 https://ibm.biz/BdzPaf
 
 
-After successful registration Login into your account. 
+After successful registration Login into your account.
 
 
 ## 1. Convert the IBM Cloud Lite account to Trial account
 
-You will be provided with PROMO Code. 
+You will be provided with PROMO Code.
 Login to [IBM Cloud](https://cloud.ibm.com) -> Click on Manage -> Account -> Account Settings -> Subscription & Feature Code -> Apply 'Promo' Code
 
 If still not able to find, for further instructions on how to apply the codes, view this page
@@ -30,13 +30,13 @@ After that click on "Create Cluster", you will be asked following details to ent
 a - Select Free Cluster
 b - Give a cluster name
 c - Select Geography as North America and Select Dallas with default resource group
-     
+
 <img src="./img/k8-2.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
-     
-Once the cluster is provisioned, Cluster will be shown in Normal State. 
-     
+
+Once the cluster is provisioned, Cluster will be shown in Normal State.
+
 <img src="./img/k8-3.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />     
@@ -50,7 +50,7 @@ configured to talk to the provisioned cluster.
 This can also be done using your local desktops. You will have to install IBM Cloud Plugin Tools for doing that.
 
 For this lab, you will be using Web Terminal, to work with your cluster. So installations on client machines is not required.
-This feature is in beta currently. 
+This feature is in beta currently.
 
 a. Access the Cluster, and go to Cluster details
 <img src="./img/webterm1.png"
@@ -60,14 +60,14 @@ a. Access the Cluster, and go to Cluster details
 b. Click on "Web terminal(beta) "
 <img src="./img/webterm2.png"
      alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" /> 
+     style="float: left; margin-right: 10px;" />
 
 c. Web based terminal opens at the bottom of the browser.     
 <img src="./img/webterm3.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />       
-     
-     
+
+
 Once your open the Web based terminal, you are ready to deploy your first application, `guestbook`.
 
 
@@ -93,17 +93,17 @@ that has already been built and uploaded to DockerHub under the name
    guestbook-59bd679fdc-bxdg7    0/1       ContainerCreating   0          1m
    ```
    Eventually, the status should show up as `Running`.
-   
+
    ```console
    $ kubectl get pods
    NAME                          READY     STATUS              RESTARTS   AGE
    guestbook-59bd679fdc-bxdg7    1/1       Running             0          1m
    ```
-   
+
    The end result of the run command is not just the pod containing our application containers,
    but a Deployment resource that manages the lifecycle of those pods.
- 
-   
+
+
 2. Once the status reads `Running`, we need to expose that deployment as a
    service so we can access it through the IP of the worker nodes.
    The `guestbook` application listens on port 3000.  Run:
@@ -120,57 +120,57 @@ that has already been built and uploaded to DockerHub under the name
    NAME        TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
    guestbook   NodePort   10.10.10.253   <none>        3000:31208/TCP   1m
    ```
-   
-   We can see that our `<nodeport>` is `31208`. We can see in the output the port mapping from 3000 inside 
-   the pod exposed to the cluster on port 31208. This port in the 31000 range is automatically chosen, 
+
+   We can see that our `<nodeport>` is `31208`. We can see in the output the port mapping from 3000 inside
+   the pod exposed to the cluster on port 31208. This port in the 31000 range is automatically chosen,
    and could be different for you.
 
 4. `guestbook` is now running on your cluster, and exposed to the internet. We need to find out where it is accessible.
    The worker nodes running in the container service get external IP addresses.
-   
+
    Run `$ ibmcloud ks `
-   
+
    Run `$ ibmcloud ks cluster-config --cluster mycluster`
 
    Run `$ ibmcloud cs workers <name-of-cluster>`, and note the public IP listed on the `<public-IP>` line.
-   
+
    ```console
    $ ibmcloud cs workers mycluster
    OK
    ID                                                 Public IP        Private IP     Machine Type   State    Status   Zone    Version  
    kube-hou02-pa1e3ee39f549640aebea69a444f51fe55-w1   173.193.99.136   10.76.194.30   free           normal   Ready    hou02   1.5.6_1500*
    ```
-   
+
    We can see that our `<public-IP>` is `173.193.99.136`.
-   
+
    or You can go to IBM Cloud Dashboard to kubernetes Cluster , and get details about the Worker Node Public IP
-   
+
     <img src="./img/webterm4.png"
      alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" /> 
-   
+     style="float: left; margin-right: 10px;" />
+
 5. Now that you have both the address and the port, you can now access the application in the web browser
    at `<public-IP>:<nodeport>`. In the example case this is `173.193.99.136:31208`.
-   
-   
+
+
    <img src="./img/Guestbook.png"
      alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" /> 
-     
-     
+     style="float: left; margin-right: 10px;" />
+
+
 Congratulations, you've now deployed an application to Kubernetes!
 
-## 5. Scale your application,
-Kubernetes Cluster has many capabilities, you will now explore the scaling. 
+## 5. Scale your application
+Kubernetes Cluster has many capabilities, you will now explore the scaling.
 
-In this section, you'll learn how to update the number of instances a deployment has, and 
+In this section, you'll learn how to update the number of instances a deployment has, and
 how to safely roll out an update of your application on Kubernetes.
 
-A replica is a copy of a pod that contains a running service. 
-By having multiple replicas of a pod, you can ensure your deployment has the available resources to 
+A replica is a copy of a pod that contains a running service.
+By having multiple replicas of a pod, you can ensure your deployment has the available resources to
 handle increasing load on your application.
 
-1.	kubectl provides a scale subcommand to change the size of an existing deployment. 
+1.	kubectl provides a scale subcommand to change the size of an existing deployment.
 Let's increase our capacity from a single running instance of guestbook up to 10 instances.
 
    ```console
@@ -179,7 +179,7 @@ Let's increase our capacity from a single running instance of guestbook up to 10
    ```
 
 
-2. Kubernetes will now try to match the desired state of 10 replicas by starting 9 new pods with the same configuration 
+2. Kubernetes will now try to match the desired state of 10 replicas by starting 9 new pods with the same configuration
 as the first.
 
    ```console
@@ -219,7 +219,7 @@ guestbook-562211614-zsp0j   1/1       Running   0          2m
 ```
 
 You should see output listing 10 replicas of your deployment
-      
+
 
 
 
@@ -232,3 +232,51 @@ and thus stop taking the course.
 
   2. To remove the service, use `$ kubectl delete service guestbook`.
 
+
+## 5. Self Healing in Kubernetes by deleting a pod
+
+As Kubernetes(K8s) is an container orchestrator, it maintains a state for your deployment. In this case we have scaled our deployment from 1 pod to 10 pods. Assuming that one of the pods is deleted (thinking the datacenter is down), we will see an important feature of Kubernetes of Self-healing and the pod will be re-initialised.
+
+1.	Check the pods for your guestbook deployment.
+
+```console
+
+$ kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+guestbook-84457db45c-2hz4x   1/1     Running   0          4d18h
+guestbook-84457db45c-9f6zk   1/1     Running   0          4d18h
+guestbook-84457db45c-fngrv   1/1     Running   0          4d18h
+guestbook-84457db45c-hjcq5   1/1     Running   0          4d18h
+guestbook-84457db45c-mct72   1/1     Running   0          4d18h
+guestbook-84457db45c-nh6ff   1/1     Running   0          4d18h
+guestbook-84457db45c-pp7wc   1/1     Running   0          4d18h
+guestbook-84457db45c-prtvp   1/1     Running   0          4d18h
+guestbook-84457db45c-zbdvr   1/1     Running   0          4d19h
+guestbook-84457db45c-zf4l9   1/1     Running   0          4d18h
+
+
+```
+You should see output listing 10 replicas of your deployment
+
+2. Pick one of the pods names, for example ```guestbook-84457db45c-zf4l9```
+
+Run the below command to delete the above pod
+```
+$ kubectl delete pod guestbook-84457db45c-zbdvr
+pod "guestbook-84457db45c-zbdvr" deleted
+
+kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+guestbook-84457db45c-2hz4x   1/1     Running   0          4d18h
+guestbook-84457db45c-4jzx6   1/1     Running   0          13s
+guestbook-84457db45c-6b4gs   1/1     Running   0          2m10s
+guestbook-84457db45c-9f6zk   1/1     Running   0          4d18h
+guestbook-84457db45c-fngrv   1/1     Running   0          4d18h
+guestbook-84457db45c-hjcq5   1/1     Running   0          4d18h
+guestbook-84457db45c-mct72   1/1     Running   0          4d18h
+guestbook-84457db45c-nh6ff   1/1     Running   0          4d18h
+guestbook-84457db45c-pp7wc   1/1     Running   0          4d18h
+guestbook-84457db45c-prtvp   1/1     Running   0          4d18h
+```
+
+We can see that Kubernetes has just created a new pod, just 13s back!
