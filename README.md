@@ -11,8 +11,9 @@ After successful registration Login into your account.
 
 ## 1. Convert the IBM Cloud Lite account to Trial account
 
-You will be provided with PROMO Code.
-Login to [IBM Cloud](https://cloud.ibm.com) -> Click on Manage -> Account -> Account Settings -> Subscription & Feature Code -> Apply 'Promo' Code
+You will be provided with PROMO / Feature Code.
+Go here -> https://cloud.ibm.com/account/settings (IBM Cloud Settings)-> Subscription & Feature Code -> Apply 'Promo' Code -> Close.
+
 
 If still not able to find, for further instructions on how to apply the codes, view this page
 [IBM Cloud Sign up and PROMO Code](https://cloud.ibm.com/docs/account?topic=account-codes#codes)
